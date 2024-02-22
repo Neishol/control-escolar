@@ -16,32 +16,32 @@ public class Queries {
     final static private String user = "";
     final static private String password = "";
 
-    public static void main(String[] args) throws Exception {
-        Scanner scn = new Scanner(System.in);
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/" + db, user, password);
-            System.out.println("Conexión correcta");
-            getValues(conexion, clientTable);
-            System.out.println("Insert id that u want to update");
-            String id = scn.nextLine();
-            System.out.println("Insert new name");
-            String name = scn.nextLine();
-            System.out.println("Insert new lastname");
-            String lastname = scn.nextLine();
-            System.out.println("Insert new email");
-            String email = scn.nextLine();
-            updateData(conexion, clientTable, id, name, lastname, email);
-            System.out.println("UPDATE " + "clientes" + " SET name = '" + name + "', lastname = '" + lastname + "', email = '" + email + "' WHERE id = '" + id + "'");
-            getValues(conexion, clientTable);
-            // insertData(conexion, clientTable, "pepito", "sanchez", "pepuitosanchez@gmail.com");
-            // deleteRecord(conexion, clientTable, "1");
-            closeConnection(conexion);
-            System.out.println("La conexión se ha cerrado");
-        } catch (SQLException | ClassNotFoundException ex) {
-            System.out.println("Error en la conexión de la base de datos");
-        }
-    }
+    // public static void main(String[] args) throws Exception {
+    //     Scanner scn = new Scanner(System.in);
+    //     try {
+    //         Class.forName("com.mysql.cj.jdbc.Driver");
+    //         Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/" + db, user, password);
+    //         System.out.println("Conexión correcta");
+    //         getValues(conexion, clientTable);
+    //         System.out.println("Insert id that u want to update");
+    //         String id = scn.nextLine();
+    //         System.out.println("Insert new name");
+    //         String name = scn.nextLine();
+    //         System.out.println("Insert new lastname");
+    //         String lastname = scn.nextLine();
+    //         System.out.println("Insert new email");
+    //         String email = scn.nextLine();
+    //         updateData(conexion, clientTable, id, name, lastname, email);
+    //         System.out.println("UPDATE " + "clientes" + " SET name = '" + name + "', lastname = '" + lastname + "', email = '" + email + "' WHERE id = '" + id + "'");
+    //         getValues(conexion, clientTable);
+    //         // insertData(conexion, clientTable, "pepito", "sanchez", "pepuitosanchez@gmail.com");
+    //         // deleteRecord(conexion, clientTable, "1");
+    //         closeConnection(conexion);
+    //         System.out.println("La conexión se ha cerrado");
+    //     } catch (SQLException | ClassNotFoundException ex) {
+    //         System.out.println("Error en la conexión de la base de datos");
+    //     }
+    // }
     public static void closeConnection(Connection conexion){
         try {
             conexion.close();
