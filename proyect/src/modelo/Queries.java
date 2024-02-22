@@ -7,15 +7,29 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Scanner;
-
 import javax.swing.JOptionPane;
 
-public class Queries {
-    final static private String db = "";
-    final static private String clientTable = "";
-    final static private String user = "";
-    final static private String password = "";
+public final class Queries {
 
+    final static private String db = getProperties().getProperty("db");
+    final static private String clientTable = getProperties().getProperty("clientTable");
+    final static private String user = getProperties().getProperty("user");
+    final static private String password = getProperties().getProperty("password");
+
+    Queries(){
+        // Properties properties = new Properties();
+    }
+
+    private getProperties(){
+        try {
+            Properties properties = new Properties();
+            properties.load(new FileInputStream("config/db.properties"));
+        } catch (IOException e) {
+            System.err.printf("Error load 'db.properties' %s \n", e.getMessage());
+            return -1;
+        }
+        return properties;
+    }
     // public static void main(String[] args) throws Exception {
     //     Scanner scn = new Scanner(System.in);
     //     try {
@@ -42,6 +56,15 @@ public class Queries {
     //         System.out.println("Error en la conexión de la base de datos");
     //     }
     // }
+    public static void createConnection(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/" + db, user, password);
+            System.out.println("Conexión correcta");
+        }catch (SQLException | ClassNotFoundException ex) {
+            System.out.println("Error en la conexión de la base de datos");
+        }
+    }
     public static void closeConnection(Connection conexion){
         try {
             conexion.close();
@@ -51,7 +74,7 @@ public class Queries {
         }
 
     }
-    public static void getValues(Connection conexion, String table_name){
+    public static void getCarreras(Connection conexion, String table_name){
         try {
             String Query = "SELECT * FROM " + table_name;
             Statement st = conexion.createStatement();
@@ -59,23 +82,17 @@ public class Queries {
             resultSet = st.executeQuery(Query);
 
             while(resultSet.next()){
-                System.out.println("ID: " + resultSet.getShort("id") + " "
-                                + "Nombre: " + resultSet.getString("name") + " "
-                                + "Apellido: " + resultSet.getString("lastname") + " "
-                                + "Correo: " + resultSet.getString("email")
-                );
+                System.out.println(resultSet.getShort("nombre"));
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
         }
     }
-    public static void insertData(Connection conexion, String table_name, String name, String lastname, String email){
+    public static void insertData(Connection conexion, String table_name, String name){
         try {
             String Query = "INSERT INTO " + table_name + " VALUES("
             + "" + "NULL" + ","
-            + "'" +  name + "',"
-            + "'" + lastname + "',"
-            + "'" + email + "'"
+            + "'" + name + "'"
 + ")";
             Statement st = conexion.createStatement();
             st.executeUpdate(Query);
@@ -84,9 +101,9 @@ public class Queries {
             JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
         }
     }
-    public static void deleteRecord(Connection conexion, String table_name, String id){
+    public static void deleteRecord(Connection conexion, String table_name, String name){
         try {
-            String Query = "DELETE FROM " + table_name + " WHERE ID = '" + id + "'";
+            String Query = "DELETE FROM " + table_name + " WHERE name = '" + name + "'";
             Statement st = conexion.createStatement();
             st.executeUpdate(Query);
         } catch (SQLException ex) {
@@ -94,9 +111,9 @@ public class Queries {
             JOptionPane.showMessageDialog(null, "Error borrando el registro especificado");
         }
     }
-    public static void updateData(Connection conexion, String table_name, String id, String name, String lastname, String email){
+    public static void updateData(Connection conexion, String table_name, String id, String name){
         try {
-            String Query = "UPDATE " + table_name + " SET name = '" + name + "', lastname = '" + lastname + "', email = '" + email + "' WHERE id = '" + id + "'"; 
+            String Query = "UPDATE " + table_name + " SET name = '" + name + "' WHERE id = '" + id + "'"; 
             Statement st = conexion.createStatement();
             st.executeUpdate(Query);
         } catch (SQLException ex) {
