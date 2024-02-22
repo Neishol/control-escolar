@@ -1,4 +1,5 @@
 package com.controlescolar;
+
 import java.util.Scanner;
 
 public class Main {
