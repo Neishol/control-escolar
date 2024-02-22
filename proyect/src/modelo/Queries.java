@@ -11,10 +11,10 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class Queries {
-    final static private String db = "";
-    final static private String clientTable = "";
-    final static private String user = "";
-    final static private String password = "";
+    final static private String db = "uni";
+    final static private String clientTable = "carreras";
+    final static private String user = "root";
+    final static private String password = "123456";
 
     // public static void main(String[] args) throws Exception {
     //     Scanner scn = new Scanner(System.in);
@@ -42,6 +42,15 @@ public class Queries {
     //         System.out.println("Error en la conexión de la base de datos");
     //     }
     // }
+    public static void openConnection(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/" + db, user, password);
+            System.out.println("Conexión correcta");
+        } catch (SQLException ex) {
+            System.out.println("Error en la conexión de la base de datos");
+            }
+    }
     public static void closeConnection(Connection conexion){
         try {
             conexion.close();
@@ -49,8 +58,8 @@ public class Queries {
         } catch (SQLException ex) {
             Logger.getLogger("App").log(Level.SEVERE, null, ex);
         }
-
     }
+    /*
     public static void getValues(Connection conexion, String table_name){
         try {
             String Query = "SELECT * FROM " + table_name;
@@ -104,4 +113,5 @@ public class Queries {
             JOptionPane.showMessageDialog(null, "Error actualizando el registro especificado");
         }
     }
+    */
 }

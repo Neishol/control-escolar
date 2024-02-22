@@ -1,8 +1,9 @@
 package com.controlescolar;
 import java.util.Scanner;
-
+import src.modelo;
 public class Main {
     public static void main(String[] args) {
+        openConnection();
         Scanner sc = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
@@ -32,5 +33,6 @@ public class Main {
                     break;
             }
         }
+        sc.close();
     }
 }
