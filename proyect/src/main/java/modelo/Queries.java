@@ -1,6 +1,8 @@
 package modelo;
 
 import java.sql.Statement;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,16 +23,16 @@ public final class Queries {
         // Properties properties = new Properties();
     }
 
-    private static Properties getProperties(){
-        try {
-            Properties properties = new Properties();
-            properties.load(new FileInputStream("src/config/db.properties"));
-        } catch (IOException e) {
-            System.err.printf("Error load 'db.properties' %s \n", e.getMessage());
-            return null;
-        }
-        return properties;
+private static Properties getProperties(){
+    Properties properties = new Properties();
+    try {
+        properties.load(new FileInputStream("src/config/db.properties"));
+    } catch (IOException e) {
+        System.err.printf("Error load 'db.properties' %s \n", e.getMessage());
+        return null;
     }
+    return properties;
+}
     // public static void main(String[] args) throws Exception {
     //     Scanner scn = new Scanner(System.in);
     //     try {

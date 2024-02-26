@@ -26,7 +26,7 @@ public class Main {
                     // Queries.getCarreras(conexion, Queries.clientTable);
                     break;
                 case 4:
-                    // Queries.deleteRecord(conexion, Queries.clientTable, sc.nextLine());
+                    //Queries.deleteRecord(conexion, Queries.clientTable, sc.nextLine());
                     break;
                 case 5:
                     System.out.println("Goodbye!");
