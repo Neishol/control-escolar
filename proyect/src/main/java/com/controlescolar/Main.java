@@ -17,16 +17,19 @@ public class Main {
             option = sc.nextInt();
             switch (option) {
                 case 1:
-                    // Queries.insertData(conexion, Queries.clientTable, sc.nextLine());
+                    System.out.println("Ingrese la carrera nueva");
+                    sc.nextLine();
+                    String rpt1 = sc.nextLine();
+                    Queries.insertData(conexion, Queries.clientTable, rpt1);
                     break;
                 case 2:
                     // Queries.updateData(conexion, Queries.clientTable, sc.nextInt(), sc.nextLine());
                     break;
                 case 3:
-                    // Queries.getCarreras(conexion, Queries.clientTable);
+                    Queries.getCarreras(conexion, Queries.clientTable);
                     break;
                 case 4:
-                    //Queries.deleteRecord(conexion, Queries.clientTable, sc.nextLine());
+                    Queries.deleteRecord(conexion, Queries.clientTable, sc.nextLine());
                     break;
                 case 5:
                     System.out.println("Goodbye!");

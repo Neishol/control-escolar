@@ -14,10 +14,10 @@ import javax.swing.JOptionPane;
 
 public final class Queries {  
 
-    final static private String db = getProperties().getProperty("db");
-    final static private String clientTable = getProperties().getProperty("clientTable");
-    final static private String user = getProperties().getProperty("user");
-    final static private String password = getProperties().getProperty("password");
+    final public static String db = getProperties().getProperty("db");
+    final public static String clientTable = getProperties().getProperty("clientTable");
+    final static String user = getProperties().getProperty("user");
+    final static String password = getProperties().getProperty("password");
 
     public Queries(){
         // Properties properties = new Properties();
@@ -26,7 +26,7 @@ public final class Queries {
 private static Properties getProperties(){
     Properties properties = new Properties();
     try {
-        properties.load(new FileInputStream("src/config/db.properties"));
+        properties.load(new FileInputStream("proyect\\config\\db.properties"));
     } catch (IOException e) {
         System.err.printf("Error load 'db.properties' %s \n", e.getMessage());
         return null;
