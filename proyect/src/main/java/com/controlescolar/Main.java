@@ -1,28 +1,29 @@
 package com.controlescolar;
 import java.util.Scanner;
-import src.modelo;
+import com.modelo.*;
+import java.sql.Connection;
 public class Main {
     public static void main(String[] args) {
-        openConnection();
+        Connection conexion = Queries.openConnection();
         Scanner sc = new Scanner(System.in);
         boolean exit = false;
         int option = 0;
         System.out.println("Welcome to the MySQL CRUD menu!");
-        System.out.println("What would you like to do?");
         while(!exit){
+        System.out.println("What would you like to do?");
             option = sc.nextInt();
             switch (option) {
                 case 1:
-                    createCareer();
+                    //createCareer();
                     break;
                 case 2:
-                    updateCareer();
+                    //updateCareer();
                     break;
                 case 3:
-                    readCareer();
+                    //readCareer();
                     break;
                 case 4:
-                    deleteCareer();
+                    //deleteCareer();
                     break;
                 case 5:
                     System.out.println("Goodbye!");
@@ -34,5 +35,6 @@ public class Main {
             }
         }
         sc.close();
+        Queries.closeConnection(conexion);
     }
 }
