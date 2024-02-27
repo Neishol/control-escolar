@@ -73,7 +73,8 @@ private static Properties getProperties(){
     public static void closeConnection(Connection conexion){
         try {
             conexion.close();
-            JOptionPane.showMessageDialog(null, "Se ha finalizado la conexión con el servidor");   
+            JOptionPane.showMessageDialog(null, "Se ha finalizado la conexión con el servidor");  
+            System.out.println("Se ha finalizado la conexión con el servidor"); 
         } catch (SQLException ex) {
             Logger.getLogger("App").log(Level.SEVERE, null, ex);
         }
@@ -87,10 +88,28 @@ private static Properties getProperties(){
             resultSet = st.executeQuery(Query);
 
             while(resultSet.next()){
-                System.out.println(resultSet.getShort("nombre"));
+                System.out.println(resultSet.getInt("id") + "-" + resultSet.getString("nombre"));
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            System.out.println("Error en la adquisición de datos");
+        }
+    }
+    public static void getCarrera(Connection conexion, String table_name, String carrera){
+        try {
+            String Query = "SELECT * FROM " + table_name + " WHERE nombre LIKE " + "'" + carrera + "'";
+            Statement st = conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);
+            if(!resultSet.next()){
+                System.out.println("The career introduced doesn't exists");
+            }else{
+                System.out.println("The career introdced exists");
+                System.out.println(resultSet.getInt("id") + "-" + resultSet.getString("nombre"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            System.out.println("Error en la adquisición de datos");
         }
     }
     public static void insertData(Connection conexion, String table_name, String name){
@@ -101,26 +120,38 @@ private static Properties getProperties(){
 + ")";
             Statement st = conexion.createStatement();
             st.executeUpdate(Query);
-            JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+            // JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+            System.out.println("Datos almacenados de forma exitosa");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
         }
     }
     public static void deleteRecord(Connection conexion, String table_name, String name){
         try {
-            String Query = "DELETE FROM " + table_name + " WHERE name = '" + name + "'";
+            String Query = "DELETE FROM " + table_name + " WHERE nombre = '" + name + "'";
             Statement st = conexion.createStatement();
-            st.executeUpdate(Query);
+            if(st.executeUpdate(Query) == 0){
+                System.out.println("The value provided doesn't exist");
+            }else{
+                st.executeUpdate(Query);
+                System.out.println("The changes were made succesfully");
+            }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Error borrando el registro especificado");
+            // System.out.println(ex.getMessage());
+            // JOptionPane.showMessageDialog(null, "Error borrando el registro especificado");
+            System.out.println("The career can't be deleted because there are still students coursing it");
         }
     }
     public static void updateData(Connection conexion, String table_name, String id, String name){
         try {
-            String Query = "UPDATE " + table_name + " SET name = '" + name + "' WHERE id = '" + id + "'"; 
+            String Query = "UPDATE " + table_name + " SET nombre = '" + name + "' WHERE id = '" + id + "'"; 
             Statement st = conexion.createStatement();
-            st.executeUpdate(Query);
+            if(name == "" || st.executeUpdate(Query) == 0){
+                System.out.println("The query was interrupted and the changes were not made");
+            }else{
+                st.executeUpdate(Query);
+                System.out.println("The update was made succesfully");
+            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Error actualizando el registro especificado");

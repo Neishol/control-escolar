@@ -23,15 +23,28 @@ public class Main {
                     Queries.insertData(conexion, Queries.clientTable, rpt1);
                     break;
                 case 2:
-                    // Queries.updateData(conexion, Queries.clientTable, sc.nextInt(), sc.nextLine());
+                    System.out.println("Insert the id of the carreer to update");
+                    sc.nextLine();
+                    String id = sc.nextLine();
+                    System.out.println("Insert the new name of the career");
+                    String carrera = sc.nextLine();
+                    Queries.updateData(conexion, Queries.clientTable, id, carrera);
                     break;
                 case 3:
                     Queries.getCarreras(conexion, Queries.clientTable);
                     break;
-                case 4:
+                case 5:
+                    System.out.println("What career do you want to delete");
+                    sc.nextLine();
                     Queries.deleteRecord(conexion, Queries.clientTable, sc.nextLine());
                     break;
-                case 5:
+                case 4:
+                    System.out.println("Insert career to check if it exists");
+                    sc.nextLine();
+                    carrera = sc.nextLine();
+                    Queries.getCarrera(conexion, Queries.clientTable, carrera);
+                    break;
+                case 6:
                     System.out.println("Goodbye!");
                     exit = true;
                     break;
