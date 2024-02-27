@@ -9,8 +9,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Properties;
-import java.util.Scanner;
-import javax.swing.JOptionPane;
+// import javax.swing.JOptionPane;
 
 public final class Queries {  
 
@@ -21,6 +20,7 @@ public final class Queries {
 
     public Queries(){
         // Properties properties = new Properties();
+        // Singleton
     }
 
 private static Properties getProperties(){
@@ -33,50 +33,24 @@ private static Properties getProperties(){
     }
     return properties;
 }
-    // public static void main(String[] args) throws Exception {
-    //     Scanner scn = new Scanner(System.in);
-    //     try {
-    //         Class.forName("com.mysql.cj.jdbc.Driver");
-    //         Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/" + db, user, password);
-    //         System.out.println("Conexión correcta");
-    //         getValues(conexion, clientTable);
-    //         System.out.println("Insert id that u want to update");
-    //         String id = scn.nextLine();
-    //         System.out.println("Insert new name");
-    //         String name = scn.nextLine();
-    //         System.out.println("Insert new lastname");
-    //         String lastname = scn.nextLine();
-    //         System.out.println("Insert new email");
-    //         String email = scn.nextLine();
-    //         updateData(conexion, clientTable, id, name, lastname, email);
-    //         System.out.println("UPDATE " + "clientes" + " SET name = '" + name + "', lastname = '" + lastname + "', email = '" + email + "' WHERE id = '" + id + "'");
-    //         getValues(conexion, clientTable);
-    //         // insertData(conexion, clientTable, "pepito", "sanchez", "pepuitosanchez@gmail.com");
-    //         // deleteRecord(conexion, clientTable, "1");
-    //         closeConnection(conexion);
-    //         System.out.println("La conexión se ha cerrado");
-    //     } catch (SQLException | ClassNotFoundException ex) {
-    //         System.out.println("Error en la conexión de la base de datos");
-    //     }
-    // }
     public static Connection createConnection(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/" + db, user, password);
-            System.out.println("Conexión correcta");
+            System.out.println("Connection established");
             return conexion;
         }catch (SQLException | ClassNotFoundException ex) {
-            System.out.println("Error en la conexión de la base de datos");
+            System.out.println("Error connecting with the database");
         }
         return null;
     }
     public static void closeConnection(Connection conexion){
         try {
             conexion.close();
-            JOptionPane.showMessageDialog(null, "Se ha finalizado la conexión con el servidor");  
-            System.out.println("Se ha finalizado la conexión con el servidor"); 
+            // JOptionPane.showMessageDialog(null, "Se ha finalizado la conexión con el servidor");  
+            System.out.println("Connection with database closed"); 
         } catch (SQLException ex) {
-            Logger.getLogger("App").log(Level.SEVERE, null, ex);
+            Logger.getLogger("Main").log(Level.SEVERE, null, ex);
         }
 
     }
@@ -91,8 +65,8 @@ private static Properties getProperties(){
                 System.out.println(resultSet.getInt("id") + "-" + resultSet.getString("nombre"));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
-            System.out.println("Error en la adquisición de datos");
+            // JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            System.out.println("Error retrieving the data");
         }
     }
     public static void getCarrera(Connection conexion, String table_name, String carrera){
@@ -108,8 +82,8 @@ private static Properties getProperties(){
                 System.out.println(resultSet.getInt("id") + "-" + resultSet.getString("nombre"));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
-            System.out.println("Error en la adquisición de datos");
+            // JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            System.out.println("Error retrieving the data");
         }
     }
     public static void insertData(Connection conexion, String table_name, String name){
@@ -121,9 +95,10 @@ private static Properties getProperties(){
             Statement st = conexion.createStatement();
             st.executeUpdate(Query);
             // JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
-            System.out.println("Datos almacenados de forma exitosa");
+            System.out.println("Data inserted succesfully");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+            // JOptionPane.showMessageDialog(null, "Error inserting data");
+            System.out.println("Error inserting data");
         }
     }
     public static void deleteRecord(Connection conexion, String table_name, String name){
@@ -154,7 +129,8 @@ private static Properties getProperties(){
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Error actualizando el registro especificado");
+            // JOptionPane.showMessageDialog(null, "Error updating the database");
+            System.out.println("Error updating the database");
         }
     }
 }
